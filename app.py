@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import xmlrpc.client
 import requests
 from flask_cors import CORS, cross_origin
-from datetime import datetime
+# from datetime import datetime
 from dotenv import load_dotenv
 import os
 
@@ -133,8 +133,8 @@ filtered_products = {}
 def get_products():
     global filtered_products
     global products_list
-    start_time = datetime.now()
-    print(f"API call started at: {start_time}")
+    # start_time = datetime.now()
+    # print(f"API call started at: {start_time}")
     uid, models = get_odoo_connection()
     if uid:
         product_ids = models.execute_kw(db, uid, api_key, 'product.product', 'search', [[]])
@@ -151,9 +151,9 @@ def get_products():
                     trimmed_name = product_name.split('/')[-1].strip()
                     filtered_products[product_id] = trimmed_name
             print("3")
-            end_time = datetime.now()
-            print(f"API call ended at: {end_time}")
-            print(f"API call duration: {end_time - start_time}")
+            # end_time = datetime.now()
+            # print(f"API call ended at: {end_time}")
+            # print(f"API call duration: {end_time - start_time}")
             return jsonify(products_list)
             # return jsonify({"filtered_products": filtered_products, "products_list": products_list})
         else:
@@ -218,4 +218,4 @@ def create_products_and_rfq():
 
 
 if __name__ == '__main__':  
-     app.run('0.0.0.0',ssl_context=('192.168.0.4.pem','192.168.0.4-key.pem'))
+     app.run(debug=True)
